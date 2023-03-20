@@ -1,23 +1,23 @@
-import random
 import time
+import os
 
 from paho.mqtt import client as mqtt_client
 from locationsharinglib import Service
 
 #Location Sharing Library config
-cookies_file = 'COOKIE_FILE_PATH.txt'
-google_email = 'GOOGLE_USER@gmail.com'
+cookies_file = "/files/" + os.environ.get("COOKIES_FILE",'googlemaps_cookie.txt')
+google_email = os.environ.get("GOOGLE_EMAIL",'')
 
 #MQTT Configuration
-broker = '192.168.1.114'
-port = 1883
-topic = "googlelocation/"
-client_id = 'python-mqtt-{random.randint(0, 1000)}'
-username = ''
-password = ''
+client_id = os.environ.get("MQTT_CLIENT_NAME", 'google_location_mqtt')
+broker = os.environ.get("MQTT_HOST",'localhost')
+port = int(os.environ.get("MQTT_PORT",'1883'))
+topic = os.environ.get("MQTT_TOPIC",'googlelocation/')
+username = os.environ.get("MQTT_USER",'')
+password = os.environ.get("MQTT_PASS",'')
 
 #Update Interval (in seconds)
-update_interval = 60
+update_interval = int(os.environ.get("INTERVAL",'60'))
 
 service = Service(cookies_file=cookies_file, authenticating_account=google_email)
 
