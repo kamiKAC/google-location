@@ -1,4 +1,4 @@
-# google_location
+# google-location
 This Python script fetches the location data from Google and publishes it to MQTT.
 
 
@@ -23,6 +23,6 @@ Folowing env variables can be passed to Docker container to configure it:
 Example usage:
 
     put your googlemaps_cookie.txt in current directory
-    docker run -ti --name google-location -e GOOGLE_EMAIL=my_email@gmail.com ./:/files/ google_location
+    docker run -ti --name google-location -e GOOGLE_EMAIL=my_email@gmail.com -v ./:/files/ kamikac/google-location
 
 
