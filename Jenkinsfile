@@ -67,8 +67,13 @@ pipeline {
             }
             steps {
                 script {
-                    sh "echo $DOCKERHUB_CREDS_PSW|docker login --username $DOCKERHUB_CREDS_USR --password-stdin \
-                    && docker buildx build -t ${registry}:${env.BUILD_ID} --platform $platforms --push ."
+                    if (params.push_to_registry.toBoolean()) {
+                        sh "echo $DOCKERHUB_CREDS_PSW|docker login --username $DOCKERHUB_CREDS_USR --password-stdin \
+                        && docker buildx build -t ${params.registry}:${env.image_build} --platform ${params.platforms} --push ."
+                    }
+                    else {
+                        sh "docker buildx build -t ${params.registry}:${env.image_build} --platform ${params.platforms} ."
+                    }
                 }
             }
         }
