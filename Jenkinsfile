@@ -10,43 +10,6 @@ pipeline {
         image_build = "${params.version == "0" ? env.BUILD_ID : params.version}"
     }
     stages {
-/*        stage('Docker build') {
-             steps {
-                script {
-                    customImage = docker.build("app-image:${env.BUILD_ID}")
-                }
-            }
-        }
-        stage('Docker - app full test') {
-            steps {
-                script {
-                    withCredentials([file(credentialsId: 'state_json', variable: 'STATE_JSON')]) {
-                        dir('state') {
-                            docker.image('clipse-mosquitto:2.0.15-openssl').withRun("--name mosquitto -p 1883:1883")
-                            container = customImage.withRun("--link mosquitto:mosquitto -v $PWD:/files/ -e DB_HOST=mosquitto") {}
-                        }
-                    }
-                }
-            }
-        }
-        stage('Docker - app external test') {
-            steps {
-                script {
-                    container = customImage.run('-p 8080:8080','node app.js') 
-                }
-                sh 'sleep 10'
-                sh 'wget -O- $(hostname):8080'
-            }
-        }
-        stage('Docker - send image to DockerHub') {
-            steps {
-                script {
-                    withRegistry("https://docker.io/",'dockerhub')
-                    customImage.Image.push("app-image:${env.BUILD_ID}")
-                }
-            }
-        }
-*/
         stage('Docker - Check / enable multiarch support') {
             steps {
                 script {
@@ -80,10 +43,6 @@ pipeline {
     }
     post {
         always {
-/*            script {
-                container.stop()
-            }
-            junit '*.xml' */
             echo 'Finished'
         }
     }
