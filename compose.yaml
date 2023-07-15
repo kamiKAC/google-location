@@ -1,0 +1,15 @@
+services:
+    google-location:
+        image: "kamikac/google-location"
+        volumes:
+            - ./:/files/
+        environment:
+            GOOGLE_EMAIL: "my_email@gmail.com"
+            #COOKIES_FILE: "googlemaps_cookie.txt"
+            #MQTT_CLIENT_NAME: "google_location_mqtt"
+            #MQTT_HOST: "" 
+            #MQTT_PORT: "1883"
+            #MQTT_TOPIC: "googlelocation/"
+            #MQTT_USER: ""
+            #MQTT_PASS: ""
+        restart: unless-stopped
