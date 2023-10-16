@@ -38,10 +38,27 @@ def publish(client):
     while True:
         time.sleep(update_interval)
         for person in service.get_all_people():
+            latitude = None
+            longitude = None
+            datetime = None
             for data in dir(person):
                 if not data.startswith('_'):
+                    if data == 'latitude':
+                        latitude = str(getattr(person, data))
+                    elif data == 'longitude':
+                        longitude = str(getattr(person, data))
+                    elif data == 'datetime':
+                        datetime = str(getattr(person, data))
                     print(topic + person.nickname + "/" + data, str(getattr(person, data)))
                     client.publish(topic + person.nickname + "/" + data, str(getattr(person, data)))
+            if latitude and longitude:
+                print(topic + person.nickname + "/" + "coordinates", latitude + "," + longitude)
+                client.publish(topic + person.nickname + "/" + "coordinates", latitude + "," + longitude)
+            if datetime:
+                print(topic + person.nickname + "/" + "datetime_iso8061", datetime[0:10] + 'T' + datetime[11:23] + datetime[26:29] + datetime [30:32])
+                client.publish(topic + person.nickname + "/" + "datetime_iso8061", datetime[0:10] + 'T' + datetime[11:23] + datetime[26:29] + datetime [30:32])
+
+
 
 
 def run():
