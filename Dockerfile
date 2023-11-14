@@ -1,6 +1,8 @@
 FROM python:3.11-alpine
 
-RUN apk update && apk upgrade --no-cache
+RUN apk update && apk upgrade --no-cache \
+    && apk install --no-cache openssl openssl1.1-compat
+
 RUN pip3 install locationsharinglib paho-mqtt
 WORKDIR /glocation
 
