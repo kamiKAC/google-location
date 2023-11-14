@@ -1,5 +1,6 @@
 FROM python:3.11-alpine
 
+RUN apk update && apk upgrade --no-cache
 RUN pip3 install locationsharinglib paho-mqtt
 WORKDIR /glocation
 
