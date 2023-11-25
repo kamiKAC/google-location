@@ -18,6 +18,7 @@ Folowing env variables can be passed to Docker container to configure it:
 <li>MQTT_TOPIC - topic to which events will be stored to (default 'googlelocation/')
 <li>MQTT_USER - username for MQTT authentication (empty by default)
 <li>MQTT_PASS - password for MQTT authentication (empty by default)
+<li>INTERVAL - Google location services polling interval in seconds (default 60)
 </ul>
 
 Example usage:
